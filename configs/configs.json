@@ -1,0 +1,8 @@
+{"server":{
+    "port":"6000",
+    "host":"localhost"
+},
+"api":{
+    "baseurl":"https://www.meteosource.com/api/v1/free/",
+    "secretkey":"0uur5oqw6oixnlah2insijvgtl48mr7v7uaxfbm3"
+}}
