@@ -1,8 +1,6 @@
 package server
 
 import (
-	"os"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,11 +9,12 @@ type Server struct {
 }
 
 func (Server) StartServer(routes *gin.Engine) {
-	port := os.Getenv("PORT")
-	host := os.Getenv("HOST")
-	if port != "" && host != "" {
-		routes.Run(host + ":" + port)
-	} else {
-		routes.Run()
-	}
+	// port := os.Getenv("PORT")
+	// host := os.Getenv("HOST")
+	// if port != "" && host != "" {
+	// 	routes.Run(host + ":" + port)
+	// } else {
+	// 	routes.Run()
+	// }
+	routes.Run()
 }
