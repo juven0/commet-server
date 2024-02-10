@@ -2,26 +2,67 @@ package handlers
 
 import (
 	"comete-server/internal/utils"
+	"encoding/json"
+	"fmt"
 	"net/http"
+	"net/url"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetWeatherByCityName() gin.HandlerFunc {
-	url := "https://www.meteosource.com/api/v1/free/point?place_id=antananarivo&sections=all&timezone=UTC&language=en&units=metric&key=0uur5oqw6oixnlah2insijvgtl48mr7v7uaxfbm3"
+
 	return func(ctx *gin.Context) {
-		data, err := utils.GetDataFromeApi(url)
+		var BASE_URL = os.Getenv("BASE_URL")
+		var key = os.Getenv("KEY")
+		cityName := ctx.Param("city")
+
+		u, err := url.Parse(BASE_URL)
+		if err != nil {
+			fmt.Println("Erreur lors de l'analyse de l'URL de base:", err)
+			return
+		}
+
+		q := u.Query()
+		q.Set("key", key)
+		q.Set("place_id", cityName)
+		u.RawQuery = q.Encode()
+		newURL := u.String()
+
+		data, err := utils.GetDataFromeApi(newURL)
 		if err != nil {
 			return
 		}
-		ctx.IndentedJSON(http.StatusOK, string(data))
+		var m map[string]interface{}
+		err = json.Unmarshal([]byte(data), &m)
+		if err != nil {
+			fmt.Println("Erreur de décodage JSON:", err)
+			return
+		}
+		ctx.IndentedJSON(http.StatusOK, m["daily"])
 	}
 }
 
 func GetWeatherByDay() gin.HandlerFunc {
-	url := "https://www.meteosource.com/api/v1/free/"
+
 	return func(ctx *gin.Context) {
-		data, err := utils.GetDataFromeApi(url)
+		var BASE_URL = os.Getenv("BASE_URL")
+		var key = os.Getenv("KEY")
+		cityName := ctx.Param("city")
+
+		u, err := url.Parse(BASE_URL)
+		if err != nil {
+			fmt.Println("Erreur lors de l'analyse de l'URL de base:", err)
+			return
+		}
+
+		q := u.Query()
+		q.Set("key", key)
+		q.Set("place_id", cityName)
+		u.RawQuery = q.Encode()
+		newURL := u.String()
+		data, err := utils.GetDataFromeApi(newURL)
 		if err != nil {
 			return
 		}

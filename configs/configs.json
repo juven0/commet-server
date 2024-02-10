@@ -1,8 +1,6 @@
-{"server":{
+{
     "port":"6000",
-    "host":"localhost"
-},
-"api":{
-    "baseurl":"https://www.meteosource.com/api/v1/free/",
+    "host":"localhost:6000",
+    "baseurl":"https://www.meteosource.com/api/v1/free/point?place_id=antsirabe&sections=all&timezone=UTC&language=en&units=metric&key=0uur5oqw6oixnlah2insijvgtl48mr7v7uaxfbm3",
     "secretkey":"0uur5oqw6oixnlah2insijvgtl48mr7v7uaxfbm3"
-}}
+}

@@ -8,6 +8,6 @@ import (
 
 func Routes() *gin.Engine {
 	r := gin.New()
-	r.GET("/api/comete", handlers.GetWeatherByCityName())
+	r.GET("/api/comete/:city", handlers.GetWeatherByCityName())
 	return r
 }

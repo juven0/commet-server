@@ -1,7 +1,7 @@
 package server
 
 import (
-	"comete-server/configs"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,7 +11,6 @@ type Server struct {
 }
 
 func (Server) StartServer(routes *gin.Engine) {
-	var conf configs.Configs
-	configuration := conf.LoadConfigs()
-	routes.Run(configuration.Server.Host + ":" + configuration.Server.Port)
+	port := os.Getenv("PORT")
+	routes.Run("localhost:" + port)
 }
