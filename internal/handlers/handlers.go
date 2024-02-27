@@ -17,6 +17,7 @@ func GetWeatherByCityName() gin.HandlerFunc {
 		var BASE_URL = os.Getenv("BASE_URL")
 		var key = os.Getenv("KEY")
 		cityName := ctx.Param("city")
+		mode := ctx.Param("mode")
 
 		u, err := url.Parse(BASE_URL)
 		if err != nil {
@@ -40,7 +41,15 @@ func GetWeatherByCityName() gin.HandlerFunc {
 			fmt.Println("Erreur de décodage JSON:", err)
 			return
 		}
-		ctx.IndentedJSON(http.StatusOK, m["daily"])
+
+		switch mode {
+		case "day":
+			ctx.IndentedJSON(http.StatusOK, m["daily"])
+		case "hourly":
+			ctx.IndentedJSON(http.StatusOK, m["hourly"])
+		case "all":
+			ctx.IndentedJSON(http.StatusOK, m)
+		}
 	}
 }
 
